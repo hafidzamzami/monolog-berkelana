@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>.monolog berkenalana</title>
+    <title>.monolog berkelana</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +36,14 @@
     <style>
         body { background-color: #F8F5E9; color: #3E2723; }
         .custom-checkbox:checked + div { background-color: #795548; color: white; border-color: #795548; }
-        .filter-chip.active { background-color: #795548; color: white; border-color: #795548; }
+        
+        /* PERBAIKAN 1: Memaksa warna tombol chip aktif agar tidak ditimpa Tailwind */
+        .filter-chip.active { 
+            background-color: #795548 !important; 
+            color: white !important; 
+            border-color: #795548 !important; 
+        }
+        
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #A1887F; border-radius: 4px; }
@@ -58,7 +65,7 @@
                 </div>
                 <div class="flex flex-col">
                     <h1 class="font-script font-bold text-2xl tracking-wide text-darkbrown leading-none">.monolog</h1>
-                    <span class="text-[10px] tracking-[0.2em] uppercase font-medium text-coffee -mt-1">berkenalana</span>
+                    <span class="text-[10px] tracking-[0.2em] uppercase font-medium text-coffee -mt-1">berkelana</span>
                 </div>
             </a>
             
@@ -107,7 +114,8 @@
 
             <div class="w-full overflow-x-auto no-scrollbar pb-2">
                 <div class="flex items-center justify-center gap-3 min-w-max px-2" id="filter-container">
-                    <button class="filter-chip px-5 py-2 rounded-full border border-coffee-light/40 text-sm font-medium text-darkbrown hover:bg-white transition-colors bg-white/40 backdrop-blur-sm" data-filter="Semua">Semua</button>
+                    <!-- Chip filter Semua diberi class active bawaan -->
+                    <button class="filter-chip active px-5 py-2 rounded-full border border-coffee-light/40 text-sm font-medium text-darkbrown hover:bg-white transition-colors bg-white/40 backdrop-blur-sm" data-filter="Semua">Semua</button>
                     <button class="filter-chip px-5 py-2 rounded-full border border-coffee-light/40 text-sm font-medium text-darkbrown hover:bg-white transition-colors bg-white/40 backdrop-blur-sm" data-filter="WFC">WFC</button>
                     <button class="filter-chip px-5 py-2 rounded-full border border-coffee-light/40 text-sm font-medium text-darkbrown hover:bg-white transition-colors bg-white/40 backdrop-blur-sm" data-filter="Nongkrong">Nongkrong</button>
                     <button class="filter-chip px-5 py-2 rounded-full border border-coffee-light/40 text-sm font-medium text-darkbrown hover:bg-white transition-colors bg-white/40 backdrop-blur-sm" data-filter="Solo">Solo</button>
@@ -175,12 +183,13 @@
                                 </div>
                             </div>
 
+                            <!-- PERBAIKAN 2: Layout tombol lokasi GPS agar pas di Android -->
                             <div>
                                 <label class="block text-sm font-semibold text-darkbrown mb-2">Titik Lokasi (Google Maps)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="location" readonly placeholder="Klik tombol GPS di samping" 
-                                        class="flex-1 px-5 py-3.5 rounded-2xl border border-cream-dark bg-cream text-darkbrown font-medium placeholder-coffee-light/50 focus:outline-none cursor-not-allowed text-sm overflow-hidden text-ellipsis">
-                                    <button type="button" id="btn-gps" class="bg-coffee hover:bg-coffee-dark text-white shadow-md transition-all px-5 rounded-2xl flex items-center justify-center shrink-0">
+                                <div class="flex items-center gap-2 w-full">
+                                    <input type="text" id="location" readonly placeholder="Klik tombol GPS" 
+                                        class="min-w-0 flex-1 px-4 py-3.5 rounded-2xl border border-cream-dark bg-cream text-darkbrown font-medium placeholder-coffee-light/50 focus:outline-none cursor-not-allowed text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                                    <button type="button" id="btn-gps" class="shrink-0 w-14 h-[52px] bg-coffee hover:bg-coffee-dark text-white shadow-md transition-all rounded-2xl flex items-center justify-center">
                                         <i class="fa-solid fa-location-crosshairs text-lg"></i>
                                     </button>
                                 </div>
@@ -189,7 +198,7 @@
 
                         <div class="space-y-6">
                             <div class="h-full flex flex-col">
-                                <label class="block text-sm font-semibold text-darkbrown mb-2">Foto Menu / Suasana <span class="text-coffee-light text-xs font-normal ml-2">(Max 800px, auto-compress)</span></label>
+                                <label class="block text-sm font-semibold text-darkbrown mb-2">Foto Menu / Suasana <span class="text-coffee-light text-xs font-normal ml-2">(Max 800px)</span></label>
                                 <div class="relative w-full flex-grow flex flex-col">
                                     <input type="file" id="menuImage" accept="image/*" class="hidden">
                                     <label for="menuImage" class="cursor-pointer flex flex-col items-center justify-center w-full flex-grow py-8 border-2 border-dashed border-coffee-light/40 rounded-3xl hover:bg-cream transition-colors text-center bg-cream/30">
@@ -305,7 +314,7 @@
     <footer class="bg-darkbrown text-cream py-8 text-center mt-auto border-t-4 border-coffee">
         <div class="flex flex-col items-center justify-center gap-2">
             <h2 class="font-script font-bold text-2xl tracking-wide leading-none">.monolog</h2>
-            <p class="text-xs text-coffee-light uppercase tracking-widest">berkenalana</p>
+            <p class="text-xs text-coffee-light uppercase tracking-widest">berkelana</p>
         </div>
         <p class="text-xs text-coffee-light mt-4">&copy; 2024 Coffee Tracker App. Created for personal journal.</p>
     </footer>
@@ -418,7 +427,7 @@
             uploadPlaceholder.classList.remove('hidden');
         }
 
-        // SUBMIT FORM (SAVE TO LOCAL STORAGE)
+        // SUBMIT FORM
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -439,7 +448,6 @@
                 return showToast("Mohon lengkapi data wajib!");
             }
 
-            // Save to Array and LocalStorage
             allCoffeeShops.push(newShop);
             localStorage.setItem('monolog_db', JSON.stringify(allCoffeeShops));
 
@@ -456,28 +464,21 @@
             renderFilteredShops();
         });
 
+        // PERBAIKAN 1 JS: Menyederhanakan penambahan class active agar tidak bentrok
         filterChips.forEach(chip => {
             if(chip.id === 'btn-nearest') return;
             chip.addEventListener('click', (e) => {
-                const target = e.currentTarget;
-                activeFilter = target.getAttribute('data-filter');
-                
-                filterChips.forEach(c => {
-                    c.classList.remove('active', 'bg-coffee', 'text-white');
-                    c.classList.add('bg-white/40', 'text-darkbrown');
-                });
-                target.classList.add('active', 'bg-coffee', 'text-white');
-                target.classList.remove('bg-white/40', 'text-darkbrown');
+                activeFilter = e.currentTarget.getAttribute('data-filter');
+                filterChips.forEach(c => c.classList.remove('active'));
+                e.currentTarget.classList.add('active');
                 renderFilteredShops();
             });
         });
 
-        // NEAREST FEATURE
         btnNearest.addEventListener('click', () => {
             if (isNearestActive) {
                 isNearestActive = false;
-                btnNearest.classList.remove('active', 'bg-coffee', 'text-white');
-                btnNearest.classList.add('bg-white/40', 'text-darkbrown');
+                btnNearest.classList.remove('active');
                 renderFilteredShops();
             } else {
                 if (!navigator.geolocation) return showToast("Browser tidak mendukung GPS");
@@ -487,8 +488,9 @@
                     (position) => {
                         userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
                         isNearestActive = true;
-                        btnNearest.classList.add('active', 'bg-coffee', 'text-white');
-                        btnNearest.classList.remove('bg-white/40', 'text-darkbrown');
+                        
+                        filterChips.forEach(c => c.classList.remove('active'));
+                        btnNearest.classList.add('active');
                         btnNearest.innerHTML = `<i class="fa-solid fa-location-dot"></i> Terdekat`;
                         renderFilteredShops();
                     },
@@ -532,18 +534,18 @@
                 const matchSearch = shop.name.toLowerCase().includes(searchQuery);
                 let matchFilter = activeFilter === 'Semua';
                 
-                if (!matchFilter) {
+                if (!matchFilter && !isNearestActive) {
                     const hasVibe = shop.vibes && shop.vibes.includes(activeFilter);
                     const hasFacility = shop.facilities && shop.facilities.includes(activeFilter);
                     matchFilter = hasVibe || hasFacility;
+                } else if (isNearestActive) {
+                    matchFilter = true;
                 }
                 return matchSearch && matchFilter;
             });
 
-            // Sort By Newest
             filtered.sort((a, b) => b.createdAt - a.createdAt);
 
-            // Calculate Distance if Nearest is Active
             if (isNearestActive && userLocation) {
                 filtered = filtered.map(shop => {
                     let distance = Infinity;
@@ -616,7 +618,6 @@
                     container.appendChild(card);
                 });
 
-                // Hapus Data Logic
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
