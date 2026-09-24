@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-    <!-- Favicon / Ikon Tab Browser -->
-    <link rel="icon" type="image/png" href="logo-kopi.png">
-
-    <!-- Konfigurasi Shortcut & Ikon untuk Layar Utama HP -->
-    <link rel="apple-touch-icon" href="logo-kopi.png">
-    <meta name="theme-color" content="#3E2723">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>.monolog berkelana</title>
@@ -19,7 +13,7 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Leaflet CSS for Map Picker -->
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <!-- Tailwind CSS -->
@@ -64,7 +58,6 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         input[type="time"]::-webkit-datetime-edit-ampm-field { display: none; }
 
-        /* Fix for Leaflet Custom Marker alignment */
         .custom-div-icon {
             background: transparent;
             border: none;
@@ -179,7 +172,7 @@
             <div class="max-w-4xl mx-auto bg-white rounded-[2.5rem] shadow-xl shadow-coffee/5 p-6 sm:p-10 md:p-14 border border-white">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-darkbrown mb-3">Menambahkan Lokasi</h2>
-                    <p class="text-coffee-light text-sm max-w-lg mx-auto">Simpan pengalamanmu agar tidak lupa. Ceritakan fasilitas, suasana, dan upload foto menunya.</p>
+                    <p class="text-coffee-light text-sm max-w-lg mx-auto">Simpan pengalamanmu agar tidak lupa. Ceritakan fasilitas, suasana, dan lampirkan menu.</p>
                 </div>
                 
                 <form id="tracker-form" class="space-y-8">
@@ -202,19 +195,17 @@
                                 </div>
                             </div>
 
-                            <!-- NEW: FITUR DUA TOMBOL LOKASI -->
+                            <!-- LOKASI -->
                             <div>
                                 <label class="block text-sm font-semibold text-darkbrown mb-2">Titik Lokasi</label>
                                 <div class="flex items-center gap-2 w-full">
                                     <input type="text" id="location" readonly placeholder="Klik 📍 (GPS) atau 🗺️ (Peta)" 
                                         class="min-w-0 flex-1 px-4 py-3.5 rounded-2xl border border-cream-dark bg-cream text-darkbrown font-medium placeholder-coffee-light/50 focus:outline-none cursor-not-allowed text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                                     
-                                    <!-- Tombol GPS -->
                                     <button type="button" id="btn-gps" title="Gunakan Lokasi Saat Ini" class="shrink-0 w-[52px] h-[52px] bg-coffee hover:bg-coffee-dark text-white shadow-md transition-all rounded-2xl flex items-center justify-center">
                                         <i class="fa-solid fa-location-crosshairs text-lg"></i>
                                     </button>
 
-                                    <!-- Tombol Peta Interaktif -->
                                     <button type="button" id="btn-map-picker" title="Pilih Lokasi di Peta" class="shrink-0 w-[52px] h-[52px] bg-darkbrown hover:bg-black text-white shadow-md transition-all rounded-2xl flex items-center justify-center">
                                         <i class="fa-solid fa-map-location-dot text-lg"></i>
                                     </button>
@@ -222,25 +213,49 @@
                             </div>
                         </div>
 
-                        <!-- Bagian Upload -->
+                        <!-- BAGIAN LAMPIRAN MENU (FOTO / PDF / LINK G.DRIVE) -->
                         <div class="space-y-6">
                             <div class="h-full flex flex-col">
-                                <label class="block text-sm font-semibold text-darkbrown mb-2">Foto Menu / Suasana <span class="text-coffee-light text-xs font-normal ml-2">(Max 800px)</span></label>
-                                <div class="relative w-full flex-grow flex flex-col">
-                                    <input type="file" id="menuImage" accept="image/*" class="hidden">
-                                    <label for="menuImage" class="cursor-pointer flex flex-col items-center justify-center w-full flex-grow py-8 border-2 border-dashed border-coffee-light/40 rounded-3xl hover:bg-cream transition-colors text-center bg-cream/30">
-                                        <div id="image-preview" class="hidden w-full h-full p-2">
-                                            <img src="" class="w-full h-full object-cover rounded-xl shadow-sm" id="preview-img">
+                                <label class="block text-sm font-semibold text-darkbrown mb-2">Lampiran Menu / Berkas</label>
+                                
+                                <!-- Tab Pilihan Tipe Input Menu -->
+                                <div class="flex bg-cream p-1 rounded-2xl mb-3 border border-cream-dark">
+                                    <button type="button" id="tab-file" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-white text-darkbrown shadow-sm">File (Gambar/PDF)</button>
+                                    <button type="button" id="tab-link" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all text-coffee-light hover:text-darkbrown">Link Google Drive</button>
+                                </div>
+
+                                <!-- Input Berbasis File (Image / PDF) -->
+                                <div id="container-file" class="relative w-full flex-grow flex flex-col">
+                                    <input type="file" id="menuFile" accept="image/*,application/pdf" class="hidden">
+                                    <label for="menuFile" class="cursor-pointer flex flex-col items-center justify-center w-full flex-grow py-6 border-2 border-dashed border-coffee-light/40 rounded-3xl hover:bg-cream transition-colors text-center bg-cream/30">
+                                        <div id="file-preview-box" class="hidden w-full h-full p-2 flex flex-col items-center justify-center">
+                                            <i id="preview-icon" class="fa-solid fa-file-pdf text-red-500 text-4xl mb-2"></i>
+                                            <span id="preview-filename" class="text-xs font-bold text-darkbrown truncate max-w-[200px]">nama_file.pdf</span>
                                         </div>
                                         <div id="upload-placeholder" class="flex flex-col items-center">
-                                            <div class="w-14 h-14 bg-white rounded-full shadow-sm flex items-center justify-center text-coffee mb-3">
-                                                <i class="fa-solid fa-camera text-xl"></i>
+                                            <div class="w-14 h-14 bg-white rounded-full shadow-sm flex items-center justify-center text-coffee mb-2">
+                                                <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
                                             </div>
-                                            <span id="file-name" class="text-sm text-darkbrown font-semibold">Pilih Foto</span>
+                                            <span id="file-name" class="text-sm text-darkbrown font-semibold">Upload Gambar / PDF</span>
+                                            <span class="text-[10px] text-coffee-light mt-1">Maks 5MB</span>
                                         </div>
                                     </label>
                                 </div>
-                                <input type="hidden" id="imageDataBase64">
+
+                                <!-- Input Berbasis Link G.Drive (Disembunyikan default) -->
+                                <div id="container-link" class="hidden flex-grow flex flex-col justify-center">
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-coffee">
+                                            <i class="fa-brands fa-google-drive"></i>
+                                        </div>
+                                        <input type="url" id="gdriveLink" placeholder="https://drive.google.com/file/d/..." 
+                                            class="w-full pl-11 pr-4 py-4 rounded-2xl border border-cream-dark focus:outline-none focus:ring-2 focus:ring-coffee/20 focus:border-coffee transition-all bg-cream text-darkbrown text-sm">
+                                    </div>
+                                    <p class="text-[11px] text-coffee-light mt-2 px-1">Pastikan akses link Google Drive diatur ke "Siapa saja yang memiliki link".</p>
+                                </div>
+
+                                <input type="hidden" id="menuDataPayload">
+                                <input type="hidden" id="menuDataType" value="file">
                             </div>
                         </div>
                     </div>
@@ -293,8 +308,7 @@
 
     <!-- MAP MODAL POPUP -->
     <div id="map-modal" class="fixed inset-0 bg-black/70 z-[100] hidden flex flex-col items-center justify-center p-4 backdrop-blur-sm transition-opacity">
-        <div class="bg-white w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl flex flex-col animate-[toast-enter_0.3s_ease-out]">
-            <!-- Header Modal -->
+        <div class="bg-white w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl flex flex-col">
             <div class="p-4 bg-darkbrown text-cream flex justify-between items-center">
                 <div class="flex items-center gap-2 font-semibold">
                     <i class="fa-solid fa-map-location-dot"></i> Pilih Titik di Peta
@@ -303,11 +317,9 @@
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
-            <!-- Canvas Peta -->
             <div id="leaflet-map" class="w-full h-[400px] bg-gray-200 cursor-crosshair"></div>
-            <!-- Footer Modal -->
             <div class="p-4 bg-white flex justify-between items-center gap-4">
-                <p class="text-xs text-coffee-light flex-1 leading-tight"><i class="fa-solid fa-circle-info mr-1"></i> Geser peta & klik untuk memindahkan pin merah ke lokasi kafe.</p>
+                <p class="text-xs text-coffee-light flex-1 leading-tight"><i class="fa-solid fa-circle-info mr-1"></i> Geser peta & klik untuk memindahkan pin ke lokasi kafe.</p>
                 <button id="confirm-map-btn" class="bg-coffee text-white px-5 py-2.5 rounded-xl font-bold hover:bg-coffee-dark transition-all text-sm shrink-0">
                     Konfirmasi Titik
                 </button>
@@ -331,11 +343,10 @@
         <span id="toast-message" class="font-medium text-sm">Pesan</span>
     </div>
 
-    <!-- LEAFLET JS SCRIPT -->
+    <!-- LEAFLET JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <script>
-        // INIT DATA
         let allCoffeeShops = JSON.parse(localStorage.getItem('monolog_db')) || [];
         let searchQuery = '';
         let activeFilter = 'Semua';
@@ -345,12 +356,21 @@
         // DOM ELEMENTS
         const form = document.getElementById('tracker-form');
         const submitBtn = document.getElementById('submit-btn');
-        const fileInput = document.getElementById('menuImage');
+        const menuFileInput = document.getElementById('menuFile');
         const fileNameDisplay = document.getElementById('file-name');
-        const imagePreview = document.getElementById('image-preview');
-        const previewImg = document.getElementById('preview-img');
+        const filePreviewBox = document.getElementById('file-preview-box');
+        const previewFilename = document.getElementById('preview-filename');
+        const previewIcon = document.getElementById('preview-icon');
         const uploadPlaceholder = document.getElementById('upload-placeholder');
-        const imageBase64Input = document.getElementById('imageDataBase64');
+        const menuDataPayload = document.getElementById('menuDataPayload');
+        const menuDataType = document.getElementById('menuDataType');
+        
+        const tabFile = document.getElementById('tab-file');
+        const tabLink = document.getElementById('tab-link');
+        const containerFile = document.getElementById('container-file');
+        const containerLink = document.getElementById('container-link');
+        const gdriveLinkInput = document.getElementById('gdriveLink');
+
         const btnGps = document.getElementById('btn-gps');
         const btnMapPicker = document.getElementById('btn-map-picker');
         const locationInput = document.getElementById('location');
@@ -362,23 +382,41 @@
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        // MAP ELEMENTS
         const mapModal = document.getElementById('map-modal');
         const closeMapBtn = document.getElementById('close-map-btn');
         const confirmMapBtn = document.getElementById('confirm-map-btn');
         let leafletMap = null;
         let mapMarker = null;
-        // Default koordinat memusat di Malang
         let currentLat = -7.9839;
         let currentLng = 112.6214; 
 
-        // MOBILE MENU
         mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         document.querySelectorAll('.mobile-link').forEach(link => {
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        // 1. LOKASI: OTOMATIS GPS
+        // TAB SWITCHER (File vs Google Drive Link)
+        tabFile.addEventListener('click', () => {
+            tabFile.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-white text-darkbrown shadow-sm";
+            tabLink.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all text-coffee-light hover:text-darkbrown";
+            containerFile.classList.remove('hidden');
+            containerFile.classList.add('flex');
+            containerLink.classList.add('hidden');
+            containerLink.classList.remove('flex');
+            menuDataType.value = 'file';
+        });
+
+        tabLink.addEventListener('click', () => {
+            tabLink.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-white text-darkbrown shadow-sm";
+            tabFile.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all text-coffee-light hover:text-darkbrown";
+            containerLink.classList.remove('hidden');
+            containerLink.classList.add('flex');
+            containerFile.classList.add('hidden');
+            containerFile.classList.remove('flex');
+            menuDataType.value = 'gdrive';
+        });
+
+        // GPS LOCATION
         btnGps.addEventListener('click', () => {
             if (navigator.geolocation) {
                 btnGps.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
@@ -393,7 +431,7 @@
                     },
                     (error) => {
                         btnGps.innerHTML = `<i class="fa-solid fa-location-crosshairs text-lg"></i>`;
-                        showToast("Gagal mendapat GPS. Pastikan izin lokasi aktif.");
+                        showToast("Gagal mendapat GPS.");
                     },
                     { enableHighAccuracy: true }
                 );
@@ -402,94 +440,74 @@
             }
         });
 
-        // 2. LOKASI: MANUAL MAP PICKER (LEAFLET)
+        // MAP PICKER MODAL
         btnMapPicker.addEventListener('click', () => {
             mapModal.classList.remove('hidden');
-            
-            // Inisialisasi peta jika belum
             if (!leafletMap) {
                 leafletMap = L.map('leaflet-map').setView([currentLat, currentLng], 14);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
+                    attribution: '&copy; OpenStreetMap'
                 }).addTo(leafletMap);
 
-                // Buat custom ikon marker aesthetic
                 const customIcon = L.divIcon({
                     html: '<i class="fa-solid fa-location-dot text-red-500 text-4xl drop-shadow-md"></i>',
                     className: 'custom-div-icon',
                     iconSize: [32, 40],
-                    iconAnchor: [16, 40] // Titik tumpu di ujung bawah ikon
+                    iconAnchor: [16, 40]
                 });
 
                 mapMarker = L.marker([currentLat, currentLng], {icon: customIcon}).addTo(leafletMap);
-
-                // Event ketika peta diklik
                 leafletMap.on('click', function(e) {
                     currentLat = e.latlng.lat;
                     currentLng = e.latlng.lng;
                     mapMarker.setLatLng([currentLat, currentLng]);
                 });
             } else {
-                // Jika sudah ada, update posisi marker ke koordinat terakhir
                 leafletMap.setView([currentLat, currentLng], 14);
                 mapMarker.setLatLng([currentLat, currentLng]);
             }
-            
-            // Fix bug tiles tidak memuat penuh di dalam modal display:none
-            setTimeout(() => {
-                leafletMap.invalidateSize();
-            }, 200);
+            setTimeout(() => { leafletMap.invalidateSize(); }, 200);
         });
 
         closeMapBtn.addEventListener('click', () => mapModal.classList.add('hidden'));
-
         confirmMapBtn.addEventListener('click', () => {
             locationInput.value = `https://maps.google.com/?q=${currentLat},${currentLng}`;
             mapModal.classList.add('hidden');
-            showToast("Titik lokasi peta berhasil disimpan!");
+            showToast("Titik peta dikonfirmasi!");
         });
 
-        // IMAGE COMPRESSION
-        fileInput.addEventListener('change', function(e) {
+        // FILE HANDLER (Image & PDF Support)
+        menuFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
-            if (!file) return resetImagePreview();
+            if (!file) return resetFilePreview();
 
-            fileNameDisplay.textContent = file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name;
+            if (file.size > 5 * 1024 * 1024) {
+                showToast("Ukuran file terlalu besar (Maks 5MB)");
+                return;
+            }
+
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function(event) {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 800;
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > MAX_WIDTH) {
-                        height = Math.round((height * MAX_WIDTH) / width);
-                        width = MAX_WIDTH;
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
-                    imageBase64Input.value = dataUrl;
-                    
-                    previewImg.src = dataUrl;
-                    imagePreview.classList.remove('hidden');
-                    uploadPlaceholder.classList.add('hidden');
+                const base64Data = event.target.result;
+                menuDataPayload.value = base64Data;
+                
+                previewFilename.textContent = file.name;
+                if (file.type === 'application/pdf') {
+                    previewIcon.className = "fa-solid fa-file-pdf text-red-500 text-4xl mb-2";
+                } else {
+                    previewIcon.className = "fa-solid fa-file-image text-coffee text-4xl mb-2";
                 }
+
+                filePreviewBox.classList.remove('hidden');
+                uploadPlaceholder.classList.add('hidden');
             }
         });
 
-        function resetImagePreview() {
-            fileNameDisplay.textContent = "Pilih Foto";
-            imageBase64Input.value = "";
-            previewImg.src = "";
-            imagePreview.classList.add('hidden');
+        function resetFilePreview() {
+            menuDataPayload.value = "";
+            previewFilename.textContent = "";
+            filePreviewBox.classList.add('hidden');
             uploadPlaceholder.classList.remove('hidden');
         }
 
@@ -497,13 +515,23 @@
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            let menuData = "";
+            let menuType = menuDataType.value;
+
+            if (menuType === 'file') {
+                menuData = menuDataPayload.value;
+            } else {
+                menuData = gdriveLinkInput.value.trim();
+            }
+
             const newShop = {
                 id: Date.now().toString(),
                 name: document.getElementById('name').value.trim(),
                 openTime: document.getElementById('openTime').value,
                 closeTime: document.getElementById('closeTime').value,
                 location: document.getElementById('location').value,
-                image: imageBase64Input.value,
+                menuContent: menuData,
+                menuType: menuType, // 'file' atau 'gdrive'
                 facilities: Array.from(document.querySelectorAll('input[name="facility"]:checked')).map(cb => cb.value),
                 vibes: Array.from(document.querySelectorAll('input[name="vibe"]:checked')).map(cb => cb.value),
                 payments: Array.from(document.querySelectorAll('input[name="payment"]:checked')).map(cb => cb.value),
@@ -511,21 +539,21 @@
             };
 
             if (!newShop.name || !newShop.openTime || !newShop.closeTime || !newShop.location) {
-                return showToast("Pastikan Nama, Jam, dan Lokasi (Maps) terisi!");
+                return showToast("Mohon lengkapi Nama, Jam, dan Lokasi!");
             }
 
             allCoffeeShops.push(newShop);
             localStorage.setItem('monolog_db', JSON.stringify(allCoffeeShops));
 
             form.reset();
-            resetImagePreview();
-            document.getElementById('location').value = ""; // Bersihkan kolom lokasi
+            resetFilePreview();
+            document.getElementById('location').value = "";
             showToast("Jejak berhasil direkam!");
             renderFilteredShops();
             document.getElementById('coffee-log').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // FILTERING & SEARCH
+        // FILTER & SEARCH
         searchInput.addEventListener('input', (e) => {
             searchQuery = e.target.value.toLowerCase();
             renderFilteredShops();
@@ -541,29 +569,27 @@
             });
         });
 
-        // FITUR TERDEKAT
         btnNearest.addEventListener('click', () => {
             if (isNearestActive) {
                 isNearestActive = false;
                 btnNearest.classList.remove('active');
                 renderFilteredShops();
             } else {
-                if (!navigator.geolocation) return showToast("Browser tidak mendukung GPS");
+                if (!navigator.geolocation) return showToast("GPS tidak didukung browser");
                 btnNearest.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mencari...`;
                 
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
                         isNearestActive = true;
-                        
                         filterChips.forEach(c => c.classList.remove('active'));
                         btnNearest.classList.add('active');
                         btnNearest.innerHTML = `<i class="fa-solid fa-location-dot"></i> Terdekat`;
                         renderFilteredShops();
                     },
-                    (error) => {
+                    () => {
                         btnNearest.innerHTML = `<i class="fa-solid fa-location-dot"></i> Terdekat`;
-                        showToast("Gagal mendeteksi lokasi.");
+                        showToast("Akses lokasi gagal.");
                     }
                 );
             }
@@ -573,11 +599,8 @@
             const R = 6371; 
             const dLat = (lat2-lat1) * (Math.PI/180);
             const dLon = (lon2-lon1) * (Math.PI/180);
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * (Math.PI/180)) * Math.cos(lat2 * (Math.PI/180)) *
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c; 
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * (Math.PI/180)) * Math.cos(lat2 * (Math.PI/180)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))); 
         }
 
         function checkIsOpen(openTime, closeTime) {
@@ -595,7 +618,7 @@
             return (currentTotal >= openTotal && currentTotal <= closeTotal);
         }
 
-        // RENDER UI
+        // RENDER CARDS DENGAN DUKUNGAN TAMPILAN MENU PDF/IMAGE/DRIVE LINK
         function renderFilteredShops() {
             let filtered = allCoffeeShops.filter(shop => {
                 const matchSearch = shop.name.toLowerCase().includes(searchQuery);
@@ -642,9 +665,27 @@
 
                     const mapBadges = (arr, wrapperClass) => (arr || []).map(item => `<span class="${wrapperClass}">${item}</span>`).join('');
                     
-                    let imageHtml = shop.image 
-                        ? `<img src="${shop.image}" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-105">`
-                        : `<div class="w-full h-48 bg-cream-dark/50 flex flex-col items-center justify-center text-coffee-light/40"><i class="fa-solid fa-mug-saucer text-4xl mb-2"></i><span class="text-xs font-medium">Tanpa Foto</span></div>`;
+                    // Render Menu Preview / Link Berdasarkan Tipe
+                    let menuDisplayHtml = '';
+                    if (shop.menuType === 'gdrive' && shop.menuContent) {
+                        menuDisplayHtml = `
+                            <div class="w-full h-36 bg-cream flex flex-col items-center justify-center p-4 text-center border-b border-cream-dark">
+                                <i class="fa-brands fa-google-drive text-coffee text-3xl mb-2"></i>
+                                <span class="text-xs font-bold text-darkbrown mb-2">Dokumen Google Drive</span>
+                                <a href="${shop.menuContent}" target="_blank" class="bg-darkbrown hover:bg-black text-white text-[11px] font-semibold px-4 py-1.5 rounded-full transition-colors">Buka Berkas <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                            </div>`;
+                    } else if (shop.menuContent && shop.menuContent.startsWith('data:application/pdf')) {
+                        menuDisplayHtml = `
+                            <div class="w-full h-36 bg-cream flex flex-col items-center justify-center p-4 text-center border-b border-cream-dark">
+                                <i class="fa-solid fa-file-pdf text-red-500 text-3xl mb-2"></i>
+                                <span class="text-xs font-bold text-darkbrown mb-2">File PDF Menu</span>
+                                <a href="${shop.menuContent}" download="menu_kopi.pdf" class="bg-coffee hover:bg-coffee-dark text-white text-[11px] font-semibold px-4 py-1.5 rounded-full transition-colors">Download PDF <i class="fa-solid fa-download ml-1"></i></a>
+                            </div>`;
+                    } else if (shop.menuContent) {
+                        menuDisplayHtml = `<img src="${shop.menuContent}" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-105">`;
+                    } else {
+                        menuDisplayHtml = `<div class="w-full h-40 bg-cream-dark/50 flex flex-col items-center justify-center text-coffee-light/40"><i class="fa-solid fa-mug-saucer text-3xl mb-1"></i><span class="text-xs font-medium">Tanpa Berkas Menu</span></div>`;
+                    }
 
                     let locBtn = '';
                     let distanceHtml = '';
@@ -664,7 +705,7 @@
                             <i class="fa-solid fa-trash-can text-sm"></i>
                         </button>
                         <div class="relative overflow-hidden">
-                            ${imageHtml}
+                            ${menuDisplayHtml}
                             <div class="absolute top-3 left-3 z-10">${statusHtml}</div>
                         </div>
                         <div class="p-6 flex-grow flex flex-col relative z-20 bg-white">
@@ -697,7 +738,6 @@
             }
         }
 
-        // TOAST LOGIC
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -718,7 +758,6 @@
             }, 3000);
         }
 
-        // INIT UI
         renderFilteredShops();
         setInterval(renderFilteredShops, 60000);
     </script>
