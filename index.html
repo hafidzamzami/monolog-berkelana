@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>.monolog berkelana</title>
+    <title>.monolog berkenalana</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="flex flex-col">
                     <h1 class="font-script font-bold text-2xl tracking-wide text-darkbrown leading-none">.monolog</h1>
-                    <span class="text-[10px] tracking-[0.2em] uppercase font-medium text-coffee -mt-1">berkelana</span>
+                    <span class="text-[10px] tracking-[0.2em] uppercase font-medium text-coffee -mt-1">berkenalana</span>
                 </div>
             </a>
             
@@ -172,7 +172,7 @@
             <div class="max-w-4xl mx-auto bg-white rounded-[2.5rem] shadow-xl shadow-coffee/5 p-6 sm:p-10 md:p-14 border border-white">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-darkbrown mb-3">Menambahkan Lokasi</h2>
-                    <p class="text-coffee-light text-sm max-w-lg mx-auto">Simpan pengalamanmu agar tidak lupa. Ceritakan fasilitas, suasana, dan lampirkan menu.</p>
+                    <p class="text-coffee-light text-sm max-w-lg mx-auto">Simpan pengalamanmu agar tidak lupa. Kamu bisa upload banyak foto/PDF sekaligus serta menyertakan link G.Drive.</p>
                 </div>
                 
                 <form id="tracker-form" class="space-y-8">
@@ -213,49 +213,35 @@
                             </div>
                         </div>
 
-                        <!-- BAGIAN LAMPIRAN MENU (FOTO / PDF / LINK G.DRIVE) -->
+                        <!-- MULTI-FILE & G.DRIVE INPUT SECTION -->
                         <div class="space-y-6">
                             <div class="h-full flex flex-col">
-                                <label class="block text-sm font-semibold text-darkbrown mb-2">Lampiran Menu / Berkas</label>
+                                <label class="block text-sm font-semibold text-darkbrown mb-2">Lampiran File & Link G.Drive</label>
                                 
-                                <!-- Tab Pilihan Tipe Input Menu -->
-                                <div class="flex bg-cream p-1 rounded-2xl mb-3 border border-cream-dark">
-                                    <button type="button" id="tab-file" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-white text-darkbrown shadow-sm">File (Gambar/PDF)</button>
-                                    <button type="button" id="tab-link" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all text-coffee-light hover:text-darkbrown">Link Google Drive</button>
-                                </div>
-
-                                <!-- Input Berbasis File (Image / PDF) -->
-                                <div id="container-file" class="relative w-full flex-grow flex flex-col">
-                                    <input type="file" id="menuFile" accept="image/*,application/pdf" class="hidden">
-                                    <label for="menuFile" class="cursor-pointer flex flex-col items-center justify-center w-full flex-grow py-6 border-2 border-dashed border-coffee-light/40 rounded-3xl hover:bg-cream transition-colors text-center bg-cream/30">
-                                        <div id="file-preview-box" class="hidden w-full h-full p-2 flex flex-col items-center justify-center">
-                                            <i id="preview-icon" class="fa-solid fa-file-pdf text-red-500 text-4xl mb-2"></i>
-                                            <span id="preview-filename" class="text-xs font-bold text-darkbrown truncate max-w-[200px]">nama_file.pdf</span>
-                                        </div>
-                                        <div id="upload-placeholder" class="flex flex-col items-center">
-                                            <div class="w-14 h-14 bg-white rounded-full shadow-sm flex items-center justify-center text-coffee mb-2">
-                                                <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
-                                            </div>
-                                            <span id="file-name" class="text-sm text-darkbrown font-semibold">Upload Gambar / PDF</span>
-                                            <span class="text-[10px] text-coffee-light mt-1">Maks 5MB</span>
-                                        </div>
+                                <!-- Upload Multiple Files (Gambar / PDF) -->
+                                <div class="relative w-full mb-3">
+                                    <input type="file" id="menuFilesInput" accept="image/*,application/pdf" multiple class="hidden">
+                                    <label for="menuFilesInput" class="cursor-pointer flex items-center justify-center gap-2 w-full py-4 border-2 border-dashed border-coffee-light/40 rounded-2xl hover:bg-cream transition-colors text-center bg-cream/30 text-darkbrown font-semibold text-sm">
+                                        <i class="fa-solid fa-cloud-arrow-up text-coffee text-lg"></i> Tambah Foto / PDF (Bisa Banyak)
                                     </label>
                                 </div>
 
-                                <!-- Input Berbasis Link G.Drive (Disembunyikan default) -->
-                                <div id="container-link" class="hidden flex-grow flex flex-col justify-center">
+                                <!-- Preview List File yang Dipilih -->
+                                <div id="selected-files-container" class="flex flex-wrap gap-2 max-h-28 overflow-y-auto mb-3 p-1">
+                                    <!-- List badge file muncul disini secara dinamis -->
+                                    <span class="text-xs text-coffee-light italic">Belum ada file dipilih.</span>
+                                </div>
+
+                                <!-- Link Google Drive Opsional -->
+                                <div>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-coffee">
                                             <i class="fa-brands fa-google-drive"></i>
                                         </div>
-                                        <input type="url" id="gdriveLink" placeholder="https://drive.google.com/file/d/..." 
-                                            class="w-full pl-11 pr-4 py-4 rounded-2xl border border-cream-dark focus:outline-none focus:ring-2 focus:ring-coffee/20 focus:border-coffee transition-all bg-cream text-darkbrown text-sm">
+                                        <input type="url" id="gdriveLink" placeholder="Link G.Drive Cadangan (Opsional)" 
+                                            class="w-full pl-11 pr-4 py-3 rounded-2xl border border-cream-dark focus:outline-none focus:ring-2 focus:ring-coffee/25 focus:border-coffee transition-all bg-cream text-darkbrown text-xs">
                                     </div>
-                                    <p class="text-[11px] text-coffee-light mt-2 px-1">Pastikan akses link Google Drive diatur ke "Siapa saja yang memiliki link".</p>
                                 </div>
-
-                                <input type="hidden" id="menuDataPayload">
-                                <input type="hidden" id="menuDataType" value="file">
                             </div>
                         </div>
                     </div>
@@ -330,7 +316,7 @@
     <footer class="bg-darkbrown text-cream py-8 text-center mt-auto border-t-4 border-coffee">
         <div class="flex flex-col items-center justify-center gap-2">
             <h2 class="font-script font-bold text-2xl tracking-wide leading-none">.monolog</h2>
-            <p class="text-xs text-coffee-light uppercase tracking-widest">berkelana</p>
+            <p class="text-xs text-coffee-light uppercase tracking-widest">berkenalana</p>
         </div>
         <p class="text-xs text-coffee-light mt-4">&copy; 2024 Coffee Tracker App. Created for personal journal.</p>
     </footer>
@@ -352,23 +338,13 @@
         let activeFilter = 'Semua';
         let isNearestActive = false;
         let userLocation = null;
+        let tempStagedFiles = []; // Menyimpan array file yang di-upload sementara
 
         // DOM ELEMENTS
         const form = document.getElementById('tracker-form');
         const submitBtn = document.getElementById('submit-btn');
-        const menuFileInput = document.getElementById('menuFile');
-        const fileNameDisplay = document.getElementById('file-name');
-        const filePreviewBox = document.getElementById('file-preview-box');
-        const previewFilename = document.getElementById('preview-filename');
-        const previewIcon = document.getElementById('preview-icon');
-        const uploadPlaceholder = document.getElementById('upload-placeholder');
-        const menuDataPayload = document.getElementById('menuDataPayload');
-        const menuDataType = document.getElementById('menuDataType');
-        
-        const tabFile = document.getElementById('tab-file');
-        const tabLink = document.getElementById('tab-link');
-        const containerFile = document.getElementById('container-file');
-        const containerLink = document.getElementById('container-link');
+        const menuFilesInput = document.getElementById('menuFilesInput');
+        const selectedFilesContainer = document.getElementById('selected-files-container');
         const gdriveLinkInput = document.getElementById('gdriveLink');
 
         const btnGps = document.getElementById('btn-gps');
@@ -395,27 +371,6 @@
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        // TAB SWITCHER (File vs Google Drive Link)
-        tabFile.addEventListener('click', () => {
-            tabFile.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-white text-darkbrown shadow-sm";
-            tabLink.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all text-coffee-light hover:text-darkbrown";
-            containerFile.classList.remove('hidden');
-            containerFile.classList.add('flex');
-            containerLink.classList.add('hidden');
-            containerLink.classList.remove('flex');
-            menuDataType.value = 'file';
-        });
-
-        tabLink.addEventListener('click', () => {
-            tabLink.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-white text-darkbrown shadow-sm";
-            tabFile.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all text-coffee-light hover:text-darkbrown";
-            containerLink.classList.remove('hidden');
-            containerLink.classList.add('flex');
-            containerFile.classList.add('hidden');
-            containerFile.classList.remove('flex');
-            menuDataType.value = 'gdrive';
-        });
-
         // GPS LOCATION
         btnGps.addEventListener('click', () => {
             if (navigator.geolocation) {
@@ -429,7 +384,7 @@
                         setTimeout(() => btnGps.innerHTML = `<i class="fa-solid fa-location-crosshairs text-lg"></i>`, 2000);
                         showToast("Lokasi otomatis didapatkan!");
                     },
-                    (error) => {
+                    () => {
                         btnGps.innerHTML = `<i class="fa-solid fa-location-crosshairs text-lg"></i>`;
                         showToast("Gagal mendapat GPS.");
                     },
@@ -476,53 +431,63 @@
             showToast("Titik peta dikonfirmasi!");
         });
 
-        // FILE HANDLER (Image & PDF Support)
-        menuFileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return resetFilePreview();
+        // MULTI-FILE HANDLER (Convert multiple images/PDFs to Base64)
+        menuFilesInput.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
 
-            if (file.size > 5 * 1024 * 1024) {
-                showToast("Ukuran file terlalu besar (Maks 5MB)");
+            files.forEach(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast(`File ${file.name} terlalu besar (Maks 5MB)`);
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(event) {
+                    tempStagedFiles.push({
+                        name: file.name,
+                        type: file.type,
+                        data: event.target.result
+                    });
+                    renderStagedFilesUI();
+                }
+            });
+            // Reset input value agar bisa pilih file yang sama berulang kali jika perlu
+            menuFilesInput.value = '';
+        });
+
+        function renderStagedFilesUI() {
+            if (tempStagedFiles.length === 0) {
+                selectedFilesContainer.innerHTML = `<span class="text-xs text-coffee-light italic">Belum ada file dipilih.</span>`;
                 return;
             }
 
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function(event) {
-                const base64Data = event.target.result;
-                menuDataPayload.value = base64Data;
+            selectedFilesContainer.innerHTML = '';
+            tempStagedFiles.forEach((fileObj, index) => {
+                const badge = document.createElement('div');
+                badge.className = "flex items-center gap-1.5 bg-cream px-3 py-1.5 rounded-xl border border-cream-dark text-xs font-medium text-darkbrown";
                 
-                previewFilename.textContent = file.name;
-                if (file.type === 'application/pdf') {
-                    previewIcon.className = "fa-solid fa-file-pdf text-red-500 text-4xl mb-2";
-                } else {
-                    previewIcon.className = "fa-solid fa-file-image text-coffee text-4xl mb-2";
-                }
+                let iconClass = fileObj.type === 'application/pdf' ? 'fa-file-pdf text-red-500' : 'fa-file-image text-coffee';
+                badge.innerHTML = `
+                    <i class="fa-solid ${iconClass}"></i>
+                    <span class="truncate max-w-[120px]">${fileObj.name}</span>
+                    <button type="button" class="text-coffee-light hover:text-red-500 ml-1" onclick="removeStagedFile(${index})">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                `;
+                selectedFilesContainer.appendChild(badge);
+            });
+        }
 
-                filePreviewBox.classList.remove('hidden');
-                uploadPlaceholder.classList.add('hidden');
-            }
-        });
-
-        function resetFilePreview() {
-            menuDataPayload.value = "";
-            previewFilename.textContent = "";
-            filePreviewBox.classList.add('hidden');
-            uploadPlaceholder.classList.remove('hidden');
+        window.removeStagedFile = function(index) {
+            tempStagedFiles.splice(index, 1);
+            renderStagedFilesUI();
         }
 
         // SUBMIT FORM
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-
-            let menuData = "";
-            let menuType = menuDataType.value;
-
-            if (menuType === 'file') {
-                menuData = menuDataPayload.value;
-            } else {
-                menuData = gdriveLinkInput.value.trim();
-            }
 
             const newShop = {
                 id: Date.now().toString(),
@@ -530,8 +495,8 @@
                 openTime: document.getElementById('openTime').value,
                 closeTime: document.getElementById('closeTime').value,
                 location: document.getElementById('location').value,
-                menuContent: menuData,
-                menuType: menuType, // 'file' atau 'gdrive'
+                files: [...tempStagedFiles], // Array multi-file
+                gdriveLink: gdriveLinkInput.value.trim(),
                 facilities: Array.from(document.querySelectorAll('input[name="facility"]:checked')).map(cb => cb.value),
                 vibes: Array.from(document.querySelectorAll('input[name="vibe"]:checked')).map(cb => cb.value),
                 payments: Array.from(document.querySelectorAll('input[name="payment"]:checked')).map(cb => cb.value),
@@ -546,7 +511,8 @@
             localStorage.setItem('monolog_db', JSON.stringify(allCoffeeShops));
 
             form.reset();
-            resetFilePreview();
+            tempStagedFiles = [];
+            renderStagedFilesUI();
             document.getElementById('location').value = "";
             showToast("Jejak berhasil direkam!");
             renderFilteredShops();
@@ -618,7 +584,7 @@
             return (currentTotal >= openTotal && currentTotal <= closeTotal);
         }
 
-        // RENDER CARDS DENGAN DUKUNGAN TAMPILAN MENU PDF/IMAGE/DRIVE LINK
+        // RENDER CARDS DENGAN MULTI-FILE SUPPORT
         function renderFilteredShops() {
             let filtered = allCoffeeShops.filter(shop => {
                 const matchSearch = shop.name.toLowerCase().includes(searchQuery);
@@ -665,26 +631,33 @@
 
                     const mapBadges = (arr, wrapperClass) => (arr || []).map(item => `<span class="${wrapperClass}">${item}</span>`).join('');
                     
-                    // Render Menu Preview / Link Berdasarkan Tipe
-                    let menuDisplayHtml = '';
-                    if (shop.menuType === 'gdrive' && shop.menuContent) {
-                        menuDisplayHtml = `
-                            <div class="w-full h-36 bg-cream flex flex-col items-center justify-center p-4 text-center border-b border-cream-dark">
-                                <i class="fa-brands fa-google-drive text-coffee text-3xl mb-2"></i>
-                                <span class="text-xs font-bold text-darkbrown mb-2">Dokumen Google Drive</span>
-                                <a href="${shop.menuContent}" target="_blank" class="bg-darkbrown hover:bg-black text-white text-[11px] font-semibold px-4 py-1.5 rounded-full transition-colors">Buka Berkas <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
-                            </div>`;
-                    } else if (shop.menuContent && shop.menuContent.startsWith('data:application/pdf')) {
-                        menuDisplayHtml = `
-                            <div class="w-full h-36 bg-cream flex flex-col items-center justify-center p-4 text-center border-b border-cream-dark">
-                                <i class="fa-solid fa-file-pdf text-red-500 text-3xl mb-2"></i>
-                                <span class="text-xs font-bold text-darkbrown mb-2">File PDF Menu</span>
-                                <a href="${shop.menuContent}" download="menu_kopi.pdf" class="bg-coffee hover:bg-coffee-dark text-white text-[11px] font-semibold px-4 py-1.5 rounded-full transition-colors">Download PDF <i class="fa-solid fa-download ml-1"></i></a>
-                            </div>`;
-                    } else if (shop.menuContent) {
-                        menuDisplayHtml = `<img src="${shop.menuContent}" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-105">`;
+                    // Render Media / Files Display
+                    let mediaHtml = '';
+                    if (shop.files && shop.files.length > 0) {
+                        mediaHtml = `<div class="grid grid-cols-2 gap-1 p-2 bg-cream-dark/30 max-h-48 overflow-y-auto">`;
+                        shop.files.forEach(f => {
+                            if (f.type === 'application/pdf') {
+                                mediaHtml += `
+                                    <div class="h-24 bg-cream rounded-xl flex flex-col items-center justify-center p-2 text-center border border-cream-dark">
+                                        <i class="fa-solid fa-file-pdf text-red-500 text-xl mb-1"></i>
+                                        <a href="${f.data}" download="${f.name}" class="text-[10px] font-bold text-darkbrown truncate max-w-full hover:underline">${f.name}</a>
+                                    </div>`;
+                            } else {
+                                mediaHtml += `
+                                    <div class="h-24 rounded-xl overflow-hidden bg-cream border border-cream-dark relative group/img">
+                                        <img src="${f.data}" class="w-full h-full object-cover">
+                                    </div>`;
+                            }
+                        });
+                        mediaHtml += `</div>`;
                     } else {
-                        menuDisplayHtml = `<div class="w-full h-40 bg-cream-dark/50 flex flex-col items-center justify-center text-coffee-light/40"><i class="fa-solid fa-mug-saucer text-3xl mb-1"></i><span class="text-xs font-medium">Tanpa Berkas Menu</span></div>`;
+                        mediaHtml = `<div class="w-full h-32 bg-cream-dark/50 flex flex-col items-center justify-center text-coffee-light/40"><i class="fa-solid fa-mug-saucer text-3xl mb-1"></i><span class="text-xs font-medium">Tanpa Berkas</span></div>`;
+                    }
+
+                    // GDrive Button if available
+                    let gdriveBtnHtml = '';
+                    if (shop.gdriveLink) {
+                        gdriveBtnHtml = `<a href="${shop.gdriveLink}" target="_blank" class="mt-2 w-full bg-cream hover:bg-cream-dark text-darkbrown text-xs font-semibold py-2 px-3 rounded-xl border border-cream-dark flex items-center justify-center gap-2 transition-colors"><i class="fa-brands fa-google-drive text-coffee"></i> Buka Link G.Drive Cadangan</a>`;
                     }
 
                     let locBtn = '';
@@ -705,16 +678,17 @@
                             <i class="fa-solid fa-trash-can text-sm"></i>
                         </button>
                         <div class="relative overflow-hidden">
-                            ${menuDisplayHtml}
+                            ${mediaHtml}
                             <div class="absolute top-3 left-3 z-10">${statusHtml}</div>
                         </div>
                         <div class="p-6 flex-grow flex flex-col relative z-20 bg-white">
                             <h3 class="font-bold text-xl text-darkbrown leading-tight mb-1">${shop.name}</h3>
-                            <div class="flex items-center justify-between text-xs text-coffee-light mt-2 mb-4 font-medium border-b border-cream-dark pb-4">
+                            <div class="flex items-center justify-between text-xs text-coffee-light mt-2 mb-2 font-medium border-b border-cream-dark pb-3">
                                 <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock"></i> ${shop.openTime} - ${shop.closeTime}</span>
                                 ${locBtn}
                             </div>
-                            <div class="space-y-3 mt-auto">
+                            ${gdriveBtnHtml}
+                            <div class="space-y-3 mt-4">
                                 ${shop.vibes && shop.vibes.length ? `<div class="flex flex-wrap gap-1.5">${mapBadges(shop.vibes, 'px-2.5 py-1 rounded-lg text-[10px] font-bold bg-coffee/10 text-coffee-dark')}</div>` : ''}
                                 ${shop.facilities && shop.facilities.length ? `<div class="flex flex-wrap gap-1.5">${mapBadges(shop.facilities, 'px-2 py-0.5 rounded text-[10px] font-semibold bg-cream text-darkbrown-light border border-cream-dark')}</div>` : ''}
                             </div>
