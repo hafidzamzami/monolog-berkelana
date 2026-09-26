@@ -41,13 +41,7 @@
     <style>
         body { background-color: #F8F5E9; color: #3E2723; }
         .custom-checkbox:checked + div { background-color: #795548; color: white; border-color: #795548; }
-        
-        .filter-chip.active { 
-            background-color: #795548 !important; 
-            color: white !important; 
-            border-color: #795548 !important; 
-        }
-        
+        .filter-chip.active { background-color: #795548 !important; color: white !important; border-color: #795548 !important; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #A1887F; border-radius: 4px; }
@@ -57,14 +51,7 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         input[type="time"]::-webkit-datetime-edit-ampm-field { display: none; }
-
-        .custom-div-icon {
-            background: transparent;
-            border: none;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-        }
+        .custom-div-icon { background: transparent; border: none; display: flex; justify-content: center; align-items: flex-end; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -91,19 +78,15 @@
             </div>
 
             <div class="flex items-center gap-3 md:hidden">
-                <div id="auth-status-mobile" class="w-2 h-2 rounded-full bg-green-500"></div>
-                <button id="mobile-menu-btn" class="text-darkbrown text-2xl focus:outline-none">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                <button id="mobile-menu-btn" class="text-darkbrown text-2xl focus:outline-none"><i class="fa-solid fa-bars"></i></button>
             </div>
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-cream shadow-lg border-b border-cream-dark flex flex-col px-4 py-4 space-y-4">
             <a href="#home" class="mobile-link text-base font-medium text-darkbrown">Home</a>
             <a href="#coffee-log" class="mobile-link text-base font-medium text-darkbrown">Coffee Log</a>
-            <a href="#add-location" class="mobile-link bg-coffee text-white px-5 py-3 rounded-xl text-center font-semibold mt-2">
-                <i class="fa-solid fa-plus mr-2"></i> Menambahkan Lokasi
-            </a>
+            <a href="#add-location" class="mobile-link bg-coffee text-white px-5 py-3 rounded-xl text-center font-semibold mt-2"><i class="fa-solid fa-plus mr-2"></i> Menambahkan Lokasi</a>
         </div>
     </nav>
 
@@ -119,11 +102,8 @@
             </p>
 
             <div class="w-full max-w-2xl relative shadow-lg shadow-coffee/5 rounded-full mb-8">
-                <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                    <i class="fa-solid fa-magnifying-glass text-coffee-light text-lg"></i>
-                </div>
-                <input type="text" id="search-input" placeholder="Cari coffee shop..." 
-                    class="block w-full pl-12 pr-6 py-4 rounded-full border-2 border-white focus:border-coffee focus:ring-0 bg-white text-darkbrown placeholder-coffee-light transition-all outline-none text-base md:text-lg">
+                <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none"><i class="fa-solid fa-magnifying-glass text-coffee-light text-lg"></i></div>
+                <input type="text" id="search-input" placeholder="Cari coffee shop..." class="block w-full pl-12 pr-6 py-4 rounded-full border-2 border-white focus:border-coffee focus:ring-0 bg-white text-darkbrown placeholder-coffee-light transition-all outline-none text-base md:text-lg">
             </div>
 
             <div class="w-full overflow-x-auto no-scrollbar pb-2">
@@ -148,22 +128,24 @@
                         <h2 class="text-2xl md:text-3xl font-bold text-darkbrown">Coffee Log</h2>
                         <p class="text-coffee-light text-sm mt-1">Daftar tempat yang sudah dikurasi.</p>
                     </div>
-                    <div class="hidden sm:flex text-xs font-medium text-coffee bg-cream-dark px-4 py-2 rounded-full items-center gap-2 shadow-sm border border-cream-dark">
-                        <i class="fa-solid fa-hard-drive"></i> Local Storage Active
+                    <!-- INDIKATOR CLOUD AKTIF -->
+                    <div class="hidden sm:flex text-xs font-medium text-white bg-coffee px-4 py-2 rounded-full items-center gap-2 shadow-md border border-coffee-dark">
+                        <i class="fa-solid fa-cloud"></i> Supabase Cloud Active
                     </div>
                 </div>
 
+                <div id="loading-state" class="flex flex-col items-center justify-center py-20 text-coffee-light">
+                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-4"></i>
+                    <p class="text-sm font-medium">Memuat data dari Cloud...</p>
+                </div>
+
                 <div id="empty-state" class="hidden flex-col items-center justify-center py-24 text-center bg-white rounded-3xl border border-dashed border-coffee-light/30 shadow-sm">
-                    <div class="w-20 h-20 bg-cream rounded-full flex items-center justify-center text-coffee-light text-3xl mb-5">
-                        <i class="fa-solid fa-leaf"></i>
-                    </div>
+                    <div class="w-20 h-20 bg-cream rounded-full flex items-center justify-center text-coffee-light text-3xl mb-5"><i class="fa-solid fa-leaf"></i></div>
                     <h3 class="text-lg font-bold text-darkbrown">Belum ada jejak ngopi</h3>
                     <p class="text-coffee-light text-sm max-w-sm mt-2">Mulai catat kedai kopi pertamamu di bawah!</p>
                 </div>
 
-                <div id="coffee-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cards injected by JS -->
-                </div>
+                <div id="coffee-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
             </div>
         </section>
 
@@ -172,7 +154,7 @@
             <div class="max-w-4xl mx-auto bg-white rounded-[2.5rem] shadow-xl shadow-coffee/5 p-6 sm:p-10 md:p-14 border border-white">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-darkbrown mb-3">Menambahkan Lokasi</h2>
-                    <p class="text-coffee-light text-sm max-w-lg mx-auto">Simpan pengalamanmu agar tidak lupa. Kamu bisa upload banyak foto/PDF sekaligus serta menyertakan link G.Drive.</p>
+                    <p class="text-coffee-light text-sm max-w-lg mx-auto">Simpan pengalamanmu ke Cloud agar bisa diakses dari perangkat mana pun.</p>
                 </div>
                 
                 <form id="tracker-form" class="space-y-8">
@@ -180,8 +162,7 @@
                         <div class="space-y-6">
                             <div>
                                 <label class="block text-sm font-semibold text-darkbrown mb-2">Nama Tempat <span class="text-red-500">*</span></label>
-                                <input type="text" id="name" required placeholder="Contoh: Kopi Tuku Cipete..." 
-                                    class="w-full px-5 py-3.5 rounded-2xl border border-cream-dark focus:outline-none focus:ring-2 focus:ring-coffee/20 focus:border-coffee transition-all bg-cream placeholder-coffee-light/50 text-darkbrown font-medium">
+                                <input type="text" id="name" required placeholder="Contoh: Kopi Tuku Cipete..." class="w-full px-5 py-3.5 rounded-2xl border border-cream-dark focus:outline-none focus:ring-2 focus:ring-coffee/20 focus:border-coffee transition-all bg-cream placeholder-coffee-light/50 text-darkbrown font-medium">
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
@@ -195,51 +176,32 @@
                                 </div>
                             </div>
 
-                            <!-- LOKASI -->
                             <div>
                                 <label class="block text-sm font-semibold text-darkbrown mb-2">Titik Lokasi</label>
                                 <div class="flex items-center gap-2 w-full">
-                                    <input type="text" id="location" readonly placeholder="Klik 📍 (GPS) atau 🗺️ (Peta)" 
-                                        class="min-w-0 flex-1 px-4 py-3.5 rounded-2xl border border-cream-dark bg-cream text-darkbrown font-medium placeholder-coffee-light/50 focus:outline-none cursor-not-allowed text-sm overflow-hidden text-ellipsis whitespace-nowrap">
-                                    
-                                    <button type="button" id="btn-gps" title="Gunakan Lokasi Saat Ini" class="shrink-0 w-[52px] h-[52px] bg-coffee hover:bg-coffee-dark text-white shadow-md transition-all rounded-2xl flex items-center justify-center">
-                                        <i class="fa-solid fa-location-crosshairs text-lg"></i>
-                                    </button>
-
-                                    <button type="button" id="btn-map-picker" title="Pilih Lokasi di Peta" class="shrink-0 w-[52px] h-[52px] bg-darkbrown hover:bg-black text-white shadow-md transition-all rounded-2xl flex items-center justify-center">
-                                        <i class="fa-solid fa-map-location-dot text-lg"></i>
-                                    </button>
+                                    <input type="text" id="location" readonly placeholder="Klik 📍 (GPS) atau 🗺️ (Peta)" class="min-w-0 flex-1 px-4 py-3.5 rounded-2xl border border-cream-dark bg-cream text-darkbrown font-medium placeholder-coffee-light/50 focus:outline-none cursor-not-allowed text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                                    <button type="button" id="btn-gps" title="GPS" class="shrink-0 w-[52px] h-[52px] bg-coffee hover:bg-coffee-dark text-white shadow-md transition-all rounded-2xl flex items-center justify-center"><i class="fa-solid fa-location-crosshairs text-lg"></i></button>
+                                    <button type="button" id="btn-map-picker" title="Peta" class="shrink-0 w-[52px] h-[52px] bg-darkbrown hover:bg-black text-white shadow-md transition-all rounded-2xl flex items-center justify-center"><i class="fa-solid fa-map-location-dot text-lg"></i></button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- MULTI-FILE & G.DRIVE INPUT SECTION -->
                         <div class="space-y-6">
                             <div class="h-full flex flex-col">
                                 <label class="block text-sm font-semibold text-darkbrown mb-2">Lampiran File & Link G.Drive</label>
-                                
-                                <!-- Upload Multiple Files (Gambar / PDF) -->
                                 <div class="relative w-full mb-3">
                                     <input type="file" id="menuFilesInput" accept="image/*,application/pdf" multiple class="hidden">
                                     <label for="menuFilesInput" class="cursor-pointer flex items-center justify-center gap-2 w-full py-4 border-2 border-dashed border-coffee-light/40 rounded-2xl hover:bg-cream transition-colors text-center bg-cream/30 text-darkbrown font-semibold text-sm">
-                                        <i class="fa-solid fa-cloud-arrow-up text-coffee text-lg"></i> Tambah Foto / PDF (Bisa Banyak)
+                                        <i class="fa-solid fa-cloud-arrow-up text-coffee text-lg"></i> Upload Foto / PDF (Bisa Banyak)
                                     </label>
                                 </div>
-
-                                <!-- Preview List File yang Dipilih -->
                                 <div id="selected-files-container" class="flex flex-wrap gap-2 max-h-28 overflow-y-auto mb-3 p-1">
-                                    <!-- List badge file muncul disini secara dinamis -->
                                     <span class="text-xs text-coffee-light italic">Belum ada file dipilih.</span>
                                 </div>
-
-                                <!-- Link Google Drive Opsional -->
                                 <div>
                                     <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-coffee">
-                                            <i class="fa-brands fa-google-drive"></i>
-                                        </div>
-                                        <input type="url" id="gdriveLink" placeholder="Link G.Drive Cadangan (Opsional)" 
-                                            class="w-full pl-11 pr-4 py-3 rounded-2xl border border-cream-dark focus:outline-none focus:ring-2 focus:ring-coffee/25 focus:border-coffee transition-all bg-cream text-darkbrown text-xs">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-coffee"><i class="fa-brands fa-google-drive"></i></div>
+                                        <input type="url" id="gdriveLink" placeholder="Link G.Drive Cadangan (Opsional)" class="w-full pl-11 pr-4 py-3 rounded-2xl border border-cream-dark focus:outline-none focus:ring-2 focus:ring-coffee/25 focus:border-coffee transition-all bg-cream text-darkbrown text-xs">
                                     </div>
                                 </div>
                             </div>
@@ -284,7 +246,7 @@
 
                     <div class="pt-6">
                         <button type="submit" id="submit-btn" class="w-full bg-darkbrown hover:bg-black text-white font-bold py-4 px-6 rounded-2xl shadow-xl shadow-darkbrown/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base">
-                            <i class="fa-solid fa-paper-plane"></i> <span>Simpan ke Jurnal</span>
+                            <i class="fa-solid fa-paper-plane"></i> <span>Simpan ke Jurnal Cloud</span>
                         </button>
                     </div>
                 </form>
@@ -292,23 +254,17 @@
         </section>
     </div>
 
-    <!-- MAP MODAL POPUP -->
-    <div id="map-modal" class="fixed inset-0 bg-black/70 z-[100] hidden flex flex-col items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <!-- MAP MODAL -->
+    <div id="map-modal" class="fixed inset-0 bg-black/70 z-[100] hidden flex flex-col items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl flex flex-col">
             <div class="p-4 bg-darkbrown text-cream flex justify-between items-center">
-                <div class="flex items-center gap-2 font-semibold">
-                    <i class="fa-solid fa-map-location-dot"></i> Pilih Titik di Peta
-                </div>
-                <button id="close-map-btn" class="text-cream/70 hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
+                <div class="flex items-center gap-2 font-semibold"><i class="fa-solid fa-map-location-dot"></i> Pilih Titik di Peta</div>
+                <button id="close-map-btn" class="text-cream/70 hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div id="leaflet-map" class="w-full h-[400px] bg-gray-200 cursor-crosshair"></div>
             <div class="p-4 bg-white flex justify-between items-center gap-4">
-                <p class="text-xs text-coffee-light flex-1 leading-tight"><i class="fa-solid fa-circle-info mr-1"></i> Geser peta & klik untuk memindahkan pin ke lokasi kafe.</p>
-                <button id="confirm-map-btn" class="bg-coffee text-white px-5 py-2.5 rounded-xl font-bold hover:bg-coffee-dark transition-all text-sm shrink-0">
-                    Konfirmasi Titik
-                </button>
+                <p class="text-xs text-coffee-light flex-1 leading-tight"><i class="fa-solid fa-circle-info mr-1"></i> Geser peta & klik untuk memindahkan pin lokasi.</p>
+                <button id="confirm-map-btn" class="bg-coffee text-white px-5 py-2.5 rounded-xl font-bold hover:bg-coffee-dark transition-all text-sm shrink-0">Konfirmasi Titik</button>
             </div>
         </div>
     </div>
@@ -318,35 +274,38 @@
             <h2 class="font-script font-bold text-2xl tracking-wide leading-none">.monolog</h2>
             <p class="text-xs text-coffee-light uppercase tracking-widest">berkenalana</p>
         </div>
-        <p class="text-xs text-coffee-light mt-4">&copy; 2024 Coffee Tracker App. Created for personal journal.</p>
+        <p class="text-xs text-coffee-light mt-4">&copy; 2026 Coffee Tracker App. Powered by Supabase & Cloudflare.</p>
     </footer>
 
     <!-- TOAST ALERT -->
     <div id="toast" class="fixed bottom-6 right-6 bg-white border border-cream-dark text-darkbrown px-6 py-4 rounded-2xl shadow-2xl shadow-darkbrown/10 flex items-center gap-3 toast-enter hidden z-50 max-w-sm">
-        <div class="w-8 h-8 rounded-full bg-coffee/10 text-coffee flex items-center justify-center shrink-0">
-            <i class="fa-solid fa-bell"></i>
-        </div>
+        <div class="w-8 h-8 rounded-full bg-coffee/10 text-coffee flex items-center justify-center shrink-0"><i class="fa-solid fa-bell"></i></div>
         <span id="toast-message" class="font-medium text-sm">Pesan</span>
     </div>
 
-    <!-- LEAFLET JS -->
+    <!-- LEAFLET JS & SUPABASE SDK -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        let allCoffeeShops = JSON.parse(localStorage.getItem('monolog_db')) || [];
+        // Kunci Supabase sudah aku perbaiki dan integrasikan di sini
+        const SUPABASE_URL = "https://ritbwfitzzkuxjencraj.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpdGJ3Zml0enprdXhqZW5jcmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0Mjg2MDIsImV4cCI6MjEwNjAwNDYwMn0.ZIM3NoWj3lPill3y9zO8lulxkCNW2C_Nexy1HojZVpo";
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let allCoffeeShops = [];
         let searchQuery = '';
         let activeFilter = 'Semua';
         let isNearestActive = false;
         let userLocation = null;
-        let tempStagedFiles = []; // Menyimpan array file yang di-upload sementara
+        let stagedFiles = [];
 
-        // DOM ELEMENTS
         const form = document.getElementById('tracker-form');
         const submitBtn = document.getElementById('submit-btn');
         const menuFilesInput = document.getElementById('menuFilesInput');
         const selectedFilesContainer = document.getElementById('selected-files-container');
         const gdriveLinkInput = document.getElementById('gdriveLink');
-
         const btnGps = document.getElementById('btn-gps');
         const btnMapPicker = document.getElementById('btn-map-picker');
         const locationInput = document.getElementById('location');
@@ -354,10 +313,9 @@
         const filterChips = document.querySelectorAll('.filter-chip');
         const btnNearest = document.getElementById('btn-nearest');
         const container = document.getElementById('coffee-list');
+        const loadingState = document.getElementById('loading-state');
         const emptyState = document.getElementById('empty-state');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
+        
         const mapModal = document.getElementById('map-modal');
         const closeMapBtn = document.getElementById('close-map-btn');
         const confirmMapBtn = document.getElementById('confirm-map-btn');
@@ -366,12 +324,43 @@
         let currentLat = -7.9839;
         let currentLng = 112.6214; 
 
-        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        });
+        // FETCH DATA FROM SUPABASE CLOUD
+        async function fetchCoffeeData() {
+            try {
+                loadingState.classList.remove('hidden');
+                const { data, error } = await supabaseClient
+                    .from('coffee_shops')
+                    .select('*')
+                    .order('created_at', { ascending: false });
 
-        // GPS LOCATION
+                if (error) throw error;
+                
+                allCoffeeShops = data.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    openTime: item.open_time,
+                    closeTime: item.close_time,
+                    location: item.location,
+                    files: item.menu_files || [],
+                    gdriveLink: item.gdrive_link || '',
+                    facilities: item.facilities || [],
+                    vibes: item.vibes || [],
+                    payments: item.payments || [],
+                    createdAt: new Date(item.created_at).getTime()
+                }));
+
+                loadingState.classList.add('hidden');
+                renderFilteredShops();
+            } catch (err) {
+                console.error(err);
+                loadingState.classList.add('hidden');
+                showToast("Gagal memuat data dari cloud.");
+            }
+        }
+
+        fetchCoffeeData();
+
+        // GPS & MAPS LOGIC
         btnGps.addEventListener('click', () => {
             if (navigator.geolocation) {
                 btnGps.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
@@ -382,46 +371,32 @@
                         locationInput.value = `https://maps.google.com/?q=${currentLat},${currentLng}`;
                         btnGps.innerHTML = `<i class="fa-solid fa-check"></i>`;
                         setTimeout(() => btnGps.innerHTML = `<i class="fa-solid fa-location-crosshairs text-lg"></i>`, 2000);
-                        showToast("Lokasi otomatis didapatkan!");
+                        showToast("Lokasi GPS didapatkan!");
                     },
                     () => {
                         btnGps.innerHTML = `<i class="fa-solid fa-location-crosshairs text-lg"></i>`;
-                        showToast("Gagal mendapat GPS.");
+                        showToast("Gagal mendeteksi GPS.");
                     },
                     { enableHighAccuracy: true }
                 );
             } else {
-                showToast("Browser tidak mendukung GPS");
+                showToast("GPS tidak didukung browser");
             }
         });
 
-        // MAP PICKER MODAL
         btnMapPicker.addEventListener('click', () => {
             mapModal.classList.remove('hidden');
             if (!leafletMap) {
                 leafletMap = L.map('leaflet-map').setView([currentLat, currentLng], 14);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap'
-                }).addTo(leafletMap);
-
-                const customIcon = L.divIcon({
-                    html: '<i class="fa-solid fa-location-dot text-red-500 text-4xl drop-shadow-md"></i>',
-                    className: 'custom-div-icon',
-                    iconSize: [32, 40],
-                    iconAnchor: [16, 40]
-                });
-
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(leafletMap);
+                const customIcon = L.divIcon({ html: '<i class="fa-solid fa-location-dot text-red-500 text-4xl drop-shadow-md"></i>', className: 'custom-div-icon', iconSize: [32, 40], iconAnchor: [16, 40] });
                 mapMarker = L.marker([currentLat, currentLng], {icon: customIcon}).addTo(leafletMap);
-                leafletMap.on('click', function(e) {
-                    currentLat = e.latlng.lat;
-                    currentLng = e.latlng.lng;
-                    mapMarker.setLatLng([currentLat, currentLng]);
-                });
+                leafletMap.on('click', e => { currentLat = e.latlng.lat; currentLng = e.latlng.lng; mapMarker.setLatLng([currentLat, currentLng]); });
             } else {
                 leafletMap.setView([currentLat, currentLng], 14);
                 mapMarker.setLatLng([currentLat, currentLng]);
             }
-            setTimeout(() => { leafletMap.invalidateSize(); }, 200);
+            setTimeout(() => leafletMap.invalidateSize(), 200);
         });
 
         closeMapBtn.addEventListener('click', () => mapModal.classList.add('hidden'));
@@ -431,100 +406,103 @@
             showToast("Titik peta dikonfirmasi!");
         });
 
-        // MULTI-FILE HANDLER (Convert multiple images/PDFs to Base64)
-        menuFilesInput.addEventListener('change', function(e) {
+        // MULTI-FILE STAGING
+        menuFilesInput.addEventListener('change', (e) => {
             const files = Array.from(e.target.files);
-            if (files.length === 0) return;
-
             files.forEach(file => {
-                if (file.size > 5 * 1024 * 1024) {
-                    showToast(`File ${file.name} terlalu besar (Maks 5MB)`);
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function(event) {
-                    tempStagedFiles.push({
-                        name: file.name,
-                        type: file.type,
-                        data: event.target.result
-                    });
-                    renderStagedFilesUI();
-                }
+                if (file.size > 10 * 1024 * 1024) return showToast(`File ${file.name} > 10MB`);
+                stagedFiles.push(file);
             });
-            // Reset input value agar bisa pilih file yang sama berulang kali jika perlu
+            renderStagedFilesUI();
             menuFilesInput.value = '';
         });
 
         function renderStagedFilesUI() {
-            if (tempStagedFiles.length === 0) {
+            if (stagedFiles.length === 0) {
                 selectedFilesContainer.innerHTML = `<span class="text-xs text-coffee-light italic">Belum ada file dipilih.</span>`;
                 return;
             }
-
             selectedFilesContainer.innerHTML = '';
-            tempStagedFiles.forEach((fileObj, index) => {
+            stagedFiles.forEach((file, index) => {
                 const badge = document.createElement('div');
                 badge.className = "flex items-center gap-1.5 bg-cream px-3 py-1.5 rounded-xl border border-cream-dark text-xs font-medium text-darkbrown";
-                
-                let iconClass = fileObj.type === 'application/pdf' ? 'fa-file-pdf text-red-500' : 'fa-file-image text-coffee';
-                badge.innerHTML = `
-                    <i class="fa-solid ${iconClass}"></i>
-                    <span class="truncate max-w-[120px]">${fileObj.name}</span>
-                    <button type="button" class="text-coffee-light hover:text-red-500 ml-1" onclick="removeStagedFile(${index})">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                `;
+                badge.innerHTML = `<i class="fa-solid fa-file text-coffee"></i><span class="truncate max-w-[120px]">${file.name}</span><button type="button" class="text-coffee-light hover:text-red-500 ml-1" onclick="removeStaged(${index})"><i class="fa-solid fa-xmark"></i></button>`;
                 selectedFilesContainer.appendChild(badge);
             });
         }
 
-        window.removeStagedFile = function(index) {
-            tempStagedFiles.splice(index, 1);
-            renderStagedFilesUI();
+        window.removeStaged = (idx) => { stagedFiles.splice(idx, 1); renderStagedFilesUI(); };
+
+        // SUBMIT & UPLOAD TO SUPABASE
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const openTime = document.getElementById('openTime').value;
+            const closeTime = document.getElementById('closeTime').value;
+            const location = document.getElementById('location').value;
+
+            if (!name || !openTime || !closeTime || !location) return showToast("Lengkapi Nama, Jam, dan Lokasi!");
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mengunggah ke Cloud...`;
+
+            try {
+                let uploadedFilesUrls = [];
+                for (let file of stagedFiles) {
+                    const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+                    const { data, error } = await supabaseClient.storage.from('menu-files').upload(fileName, file);
+                    if (error) throw error;
+                    
+                    const { data: publicUrlData } = supabaseClient.storage.from('menu-files').getPublicUrl(fileName);
+                    uploadedFilesUrls.push({ name: file.name, type: file.type, url: publicUrlData.publicUrl });
+                }
+
+                const newRecord = {
+                    name,
+                    open_time: openTime,
+                    close_time: closeTime,
+                    location,
+                    menu_files: uploadedFilesUrls,
+                    gdrive_link: gdriveLinkInput.value.trim(),
+                    facilities: Array.from(document.querySelectorAll('input[name="facility"]:checked')).map(cb => cb.value),
+                    vibes: Array.from(document.querySelectorAll('input[name="vibe"]:checked')).map(cb => cb.value),
+                    payments: Array.from(document.querySelectorAll('input[name="payment"]:checked')).map(cb => cb.value)
+                };
+
+                const { error: insertError } = await supabaseClient.from('coffee_shops').insert([newRecord]);
+                if (insertError) throw insertError;
+
+                form.reset();
+                stagedFiles = [];
+                renderStagedFilesUI();
+                locationInput.value = "";
+                showToast("Berhasil disimpan ke Cloud!");
+                await fetchCoffeeData();
+                document.getElementById('coffee-log').scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                console.error(err);
+                showToast("Gagal menyimpan ke server.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Simpan ke Jurnal Cloud</span>`;
+            }
+        });
+
+        // DELETE RECORD DARI SUPABASE
+        window.deleteShop = async (id) => {
+            if (!confirm("Hapus catatan ini dari Cloud?")) return;
+            try {
+                const { error } = await supabaseClient.from('coffee_shops').delete().eq('id', id);
+                if (error) throw error;
+                showToast("Catatan dihapus");
+                fetchCoffeeData();
+            } catch(e) {
+                showToast("Gagal menghapus");
+            }
         }
 
-        // SUBMIT FORM
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const newShop = {
-                id: Date.now().toString(),
-                name: document.getElementById('name').value.trim(),
-                openTime: document.getElementById('openTime').value,
-                closeTime: document.getElementById('closeTime').value,
-                location: document.getElementById('location').value,
-                files: [...tempStagedFiles], // Array multi-file
-                gdriveLink: gdriveLinkInput.value.trim(),
-                facilities: Array.from(document.querySelectorAll('input[name="facility"]:checked')).map(cb => cb.value),
-                vibes: Array.from(document.querySelectorAll('input[name="vibe"]:checked')).map(cb => cb.value),
-                payments: Array.from(document.querySelectorAll('input[name="payment"]:checked')).map(cb => cb.value),
-                createdAt: Date.now()
-            };
-
-            if (!newShop.name || !newShop.openTime || !newShop.closeTime || !newShop.location) {
-                return showToast("Mohon lengkapi Nama, Jam, dan Lokasi!");
-            }
-
-            allCoffeeShops.push(newShop);
-            localStorage.setItem('monolog_db', JSON.stringify(allCoffeeShops));
-
-            form.reset();
-            tempStagedFiles = [];
-            renderStagedFilesUI();
-            document.getElementById('location').value = "";
-            showToast("Jejak berhasil direkam!");
-            renderFilteredShops();
-            document.getElementById('coffee-log').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // FILTER & SEARCH
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value.toLowerCase();
-            renderFilteredShops();
-        });
-
+        // FILTER & RENDER
+        searchInput.addEventListener('input', (e) => { searchQuery = e.target.value.toLowerCase(); renderFilteredShops(); });
         filterChips.forEach(chip => {
             if(chip.id === 'btn-nearest') return;
             chip.addEventListener('click', (e) => {
@@ -541,112 +519,76 @@
                 btnNearest.classList.remove('active');
                 renderFilteredShops();
             } else {
-                if (!navigator.geolocation) return showToast("GPS tidak didukung browser");
+                if (!navigator.geolocation) return showToast("GPS tidak didukung");
                 btnNearest.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mencari...`;
-                
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+                    (pos) => {
+                        userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
                         isNearestActive = true;
                         filterChips.forEach(c => c.classList.remove('active'));
                         btnNearest.classList.add('active');
                         btnNearest.innerHTML = `<i class="fa-solid fa-location-dot"></i> Terdekat`;
                         renderFilteredShops();
                     },
-                    () => {
-                        btnNearest.innerHTML = `<i class="fa-solid fa-location-dot"></i> Terdekat`;
-                        showToast("Akses lokasi gagal.");
-                    }
+                    () => { btnNearest.innerHTML = `<i class="fa-solid fa-location-dot"></i> Terdekat`; showToast("Gagal akses GPS"); }
                 );
             }
         });
 
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-            const R = 6371; 
-            const dLat = (lat2-lat1) * (Math.PI/180);
-            const dLon = (lon2-lon1) * (Math.PI/180);
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * (Math.PI/180)) * Math.cos(lat2 * (Math.PI/180)) * Math.sin(dLon/2) * Math.sin(dLon/2);
-            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))); 
+            const R = 6371; const dLat = (lat2-lat1)*(Math.PI/180); const dLon = (lon2-lon1)*(Math.PI/180);
+            const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*(Math.PI/180))*Math.cos(lat2*(Math.PI/180))*Math.sin(dLon/2)*Math.sin(dLon/2);
+            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
         }
 
         function checkIsOpen(openTime, closeTime) {
             if(!openTime || !closeTime) return null;
-            const now = new Date();
-            const currentTotal = now.getHours() * 60 + now.getMinutes();
-            const [oH, oM] = openTime.split(':').map(Number);
-            const [cH, cM] = closeTime.split(':').map(Number);
-            const openTotal = oH * 60 + oM;
-            const closeTotal = cH * 60 + cM;
-
-            if (closeTotal < openTotal) {
-                return (currentTotal >= openTotal || currentTotal <= closeTotal);
-            }
-            return (currentTotal >= openTotal && currentTotal <= closeTotal);
+            const now = new Date(); const cur = now.getHours() * 60 + now.getMinutes();
+            const [oH, oM] = openTime.split(':').map(Number); const [cH, cM] = closeTime.split(':').map(Number);
+            const openT = oH * 60 + oM; const closeT = cH * 60 + cM;
+            if (closeT < openT) return (cur >= openT || cur <= closeT);
+            return (cur >= openT && cur <= closeT);
         }
 
-        // RENDER CARDS DENGAN MULTI-FILE SUPPORT
         function renderFilteredShops() {
             let filtered = allCoffeeShops.filter(shop => {
                 const matchSearch = shop.name.toLowerCase().includes(searchQuery);
-                let matchFilter = activeFilter === 'Semua';
-                
-                if (!matchFilter && !isNearestActive) {
-                    const hasVibe = shop.vibes && shop.vibes.includes(activeFilter);
-                    const hasFacility = shop.facilities && shop.facilities.includes(activeFilter);
-                    matchFilter = hasVibe || hasFacility;
-                } else if (isNearestActive) {
-                    matchFilter = true;
+                let matchFilter = activeFilter === 'Semua' || isNearestActive;
+                if (!matchFilter) {
+                    matchFilter = (shop.vibes && shop.vibes.includes(activeFilter)) || (shop.facilities && shop.facilities.includes(activeFilter));
                 }
                 return matchSearch && matchFilter;
             });
-
-            filtered.sort((a, b) => b.createdAt - a.createdAt);
 
             if (isNearestActive && userLocation) {
                 filtered = filtered.map(shop => {
                     let distance = Infinity;
                     try {
-                        const match = shop.location.match(/q=([-.\d]+),([-.\d]+)/);
-                        if (match) {
-                            distance = getDistanceFromLatLonInKm(userLocation.lat, userLocation.lng, parseFloat(match[1]), parseFloat(match[2]));
-                        }
-                    } catch(e) {}
+                        const m = shop.location.match(/q=([-.\d]+),([-.\d]+)/);
+                        if (m) distance = getDistanceFromLatLonInKm(userLocation.lat, userLocation.lng, parseFloat(m[1]), parseFloat(m[2]));
+                    } catch(e){}
                     return { ...shop, distance };
-                }).sort((a, b) => a.distance - b.distance);
+                }).sort((a,b) => a.distance - b.distance);
             }
 
             container.innerHTML = '';
             if (filtered.length === 0) {
-                emptyState.classList.remove('hidden');
-                emptyState.classList.add('flex');
+                emptyState.classList.remove('hidden'); emptyState.classList.add('flex'); container.classList.add('hidden');
             } else {
-                emptyState.classList.add('hidden');
-                emptyState.classList.remove('flex');
+                emptyState.classList.add('hidden'); emptyState.classList.remove('flex'); container.classList.remove('hidden');
                 
                 filtered.forEach(shop => {
                     const isOpen = checkIsOpen(shop.openTime, shop.closeTime);
-                    let statusHtml = isOpen 
-                        ? `<span class="bg-status-open/10 text-status-open text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-status-open/20 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-status-open animate-pulse"></span> Buka</span>`
-                        : `<span class="bg-status-close/10 text-status-close text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-status-close/20 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-status-close"></span> Tutup</span>`;
+                    let statusHtml = isOpen !== null ? (isOpen ? `<span class="bg-status-open/10 text-status-open text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-status-open/20 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-status-open animate-pulse"></span> Buka</span>` : `<span class="bg-status-close/10 text-status-close text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-status-close/20 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-status-close"></span> Tutup</span>`) : '';
 
-                    const mapBadges = (arr, wrapperClass) => (arr || []).map(item => `<span class="${wrapperClass}">${item}</span>`).join('');
-                    
-                    // Render Media / Files Display
                     let mediaHtml = '';
                     if (shop.files && shop.files.length > 0) {
                         mediaHtml = `<div class="grid grid-cols-2 gap-1 p-2 bg-cream-dark/30 max-h-48 overflow-y-auto">`;
                         shop.files.forEach(f => {
-                            if (f.type === 'application/pdf') {
-                                mediaHtml += `
-                                    <div class="h-24 bg-cream rounded-xl flex flex-col items-center justify-center p-2 text-center border border-cream-dark">
-                                        <i class="fa-solid fa-file-pdf text-red-500 text-xl mb-1"></i>
-                                        <a href="${f.data}" download="${f.name}" class="text-[10px] font-bold text-darkbrown truncate max-w-full hover:underline">${f.name}</a>
-                                    </div>`;
+                            if (f.type && f.type.includes('pdf')) {
+                                mediaHtml += `<div class="h-24 bg-cream rounded-xl flex flex-col items-center justify-center p-2 text-center border border-cream-dark"><i class="fa-solid fa-file-pdf text-red-500 text-xl mb-1"></i><a href="${f.url}" target="_blank" class="text-[10px] font-bold text-darkbrown truncate max-w-full hover:underline">${f.name}</a></div>`;
                             } else {
-                                mediaHtml += `
-                                    <div class="h-24 rounded-xl overflow-hidden bg-cream border border-cream-dark relative group/img">
-                                        <img src="${f.data}" class="w-full h-full object-cover">
-                                    </div>`;
+                                mediaHtml += `<div class="h-24 rounded-xl overflow-hidden bg-cream border border-cream-dark"><img src="${f.url}" class="w-full h-full object-cover"></div>`;
                             }
                         });
                         mediaHtml += `</div>`;
@@ -654,88 +596,47 @@
                         mediaHtml = `<div class="w-full h-32 bg-cream-dark/50 flex flex-col items-center justify-center text-coffee-light/40"><i class="fa-solid fa-mug-saucer text-3xl mb-1"></i><span class="text-xs font-medium">Tanpa Berkas</span></div>`;
                     }
 
-                    // GDrive Button if available
-                    let gdriveBtnHtml = '';
-                    if (shop.gdriveLink) {
-                        gdriveBtnHtml = `<a href="${shop.gdriveLink}" target="_blank" class="mt-2 w-full bg-cream hover:bg-cream-dark text-darkbrown text-xs font-semibold py-2 px-3 rounded-xl border border-cream-dark flex items-center justify-center gap-2 transition-colors"><i class="fa-brands fa-google-drive text-coffee"></i> Buka Link G.Drive Cadangan</a>`;
-                    }
-
-                    let locBtn = '';
-                    let distanceHtml = '';
-                    if (shop.location) {
-                        if (isNearestActive && shop.distance && shop.distance !== Infinity) {
-                            distanceHtml = `<span class="text-coffee-dark mr-1">${shop.distance.toFixed(1)} km</span>`;
-                        }
-                        locBtn = `<a href="${shop.location}" target="_blank" class="text-coffee hover:text-coffee-dark bg-cream hover:bg-cream-dark px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5">${distanceHtml}<i class="fa-solid fa-location-dot"></i> Maps</a>`;
-                    }
+                    let gdriveBtn = shop.gdriveLink ? `<a href="${shop.gdriveLink}" target="_blank" class="mt-2 w-full bg-cream hover:bg-cream-dark text-darkbrown text-xs font-semibold py-2 px-3 rounded-xl border border-cream-dark flex items-center justify-center gap-2 transition-colors"><i class="fa-brands fa-google-drive text-coffee"></i> Buka Link G.Drive Cadangan</a>` : '';
+                    let distanceText = (isNearestActive && shop.distance && shop.distance !== Infinity) ? `<span class="text-coffee-dark mr-1">${shop.distance.toFixed(1)} km</span>` : '';
+                    let locBtn = shop.location ? `<a href="${shop.location}" target="_blank" class="text-coffee hover:text-coffee-dark bg-cream hover:bg-cream-dark px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5">${distanceText}<i class="fa-solid fa-location-dot"></i> Maps</a>` : '';
 
                     const dateStr = new Date(shop.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
 
                     const card = document.createElement('div');
                     card.className = "bg-white rounded-3xl shadow-lg shadow-coffee/5 border border-cream-dark overflow-hidden flex flex-col group relative transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-coffee/10";
                     card.innerHTML = `
-                        <button class="delete-btn absolute top-3 right-3 bg-white text-red-500 hover:text-white hover:bg-red-500 rounded-full w-9 h-9 flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all z-20 scale-90 group-hover:scale-100" data-id="${shop.id}" title="Hapus Data">
-                            <i class="fa-solid fa-trash-can text-sm"></i>
-                        </button>
-                        <div class="relative overflow-hidden">
-                            ${mediaHtml}
-                            <div class="absolute top-3 left-3 z-10">${statusHtml}</div>
-                        </div>
+                        <button class="absolute top-3 right-3 bg-white text-red-500 hover:text-white hover:bg-red-500 rounded-full w-9 h-9 flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all z-20 scale-90 group-hover:scale-100" onclick="deleteShop(${shop.id})" title="Hapus"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                        <div class="relative overflow-hidden">${mediaHtml}<div class="absolute top-3 left-3 z-10">${statusHtml}</div></div>
                         <div class="p-6 flex-grow flex flex-col relative z-20 bg-white">
                             <h3 class="font-bold text-xl text-darkbrown leading-tight mb-1">${shop.name}</h3>
                             <div class="flex items-center justify-between text-xs text-coffee-light mt-2 mb-2 font-medium border-b border-cream-dark pb-3">
                                 <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock"></i> ${shop.openTime} - ${shop.closeTime}</span>
                                 ${locBtn}
                             </div>
-                            ${gdriveBtnHtml}
+                            ${gdriveBtn}
                             <div class="space-y-3 mt-4">
-                                ${shop.vibes && shop.vibes.length ? `<div class="flex flex-wrap gap-1.5">${mapBadges(shop.vibes, 'px-2.5 py-1 rounded-lg text-[10px] font-bold bg-coffee/10 text-coffee-dark')}</div>` : ''}
-                                ${shop.facilities && shop.facilities.length ? `<div class="flex flex-wrap gap-1.5">${mapBadges(shop.facilities, 'px-2 py-0.5 rounded text-[10px] font-semibold bg-cream text-darkbrown-light border border-cream-dark')}</div>` : ''}
+                                ${shop.vibes && shop.vibes.length ? `<div class="flex flex-wrap gap-1.5">${shop.vibes.map(v => `<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-coffee/10 text-coffee-dark">${v}</span>`).join('')}</div>` : ''}
+                                ${shop.facilities && shop.facilities.length ? `<div class="flex flex-wrap gap-1.5">${shop.facilities.map(f => `<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-cream text-darkbrown-light border border-cream-dark">${f}</span>`).join('')}</div>` : ''}
                             </div>
-                            <div class="mt-5 text-[10px] text-coffee-light/60 font-medium text-right flex items-center justify-end gap-1.5">
-                                <i class="fa-regular fa-calendar"></i> Disimpan: ${dateStr}
-                            </div>
-                        </div>
-                    `;
+                            <div class="mt-5 text-[10px] text-coffee-light/60 font-medium text-right flex items-center justify-end gap-1.5"><i class="fa-regular fa-calendar"></i> Disimpan: ${dateStr}</div>
+                        </div>`;
                     container.appendChild(card);
-                });
-
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.getAttribute('data-id');
-                        allCoffeeShops = allCoffeeShops.filter(shop => shop.id !== id);
-                        localStorage.setItem('monolog_db', JSON.stringify(allCoffeeShops));
-                        renderFilteredShops();
-                        showToast("Jejak berhasil dihapus");
-                    });
                 });
             }
         }
 
         let toastTimeout;
-        function showToast(message) {
+        function showToast(msg) {
             const toast = document.getElementById('toast');
-            document.getElementById('toast-message').textContent = message;
+            document.getElementById('toast-message').textContent = msg;
             toast.classList.remove('hidden');
-            requestAnimationFrame(() => {
-                toast.classList.remove('toast-enter');
-                toast.classList.add('toast-enter-active');
-            });
+            requestAnimationFrame(() => { toast.classList.remove('toast-enter'); toast.classList.add('toast-enter-active'); });
             clearTimeout(toastTimeout);
             toastTimeout = setTimeout(() => {
-                toast.classList.remove('toast-enter-active');
-                toast.classList.add('toast-exit-active');
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                    toast.classList.remove('toast-exit-active', 'toast-enter');
-                }, 300);
+                toast.classList.remove('toast-enter-active'); toast.classList.add('toast-exit-active');
+                setTimeout(() => { toast.classList.add('hidden'); toast.classList.remove('toast-exit-active', 'toast-enter'); }, 300);
             }, 3000);
         }
-
-        renderFilteredShops();
-        setInterval(renderFilteredShops, 60000);
-        const SUPABASE_URL = "https://ritbwfitzzkuxjencraj.supabase.co/rest/v1/";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpdGJ3Zml0enprdXhqZW5jcmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0Mjg2MDIsImV4cCI6MjEwNjAwNDYwMn0.ZIM3NoWj3lPill3y9zO8lulxkCNW2C_Nexy1HojZVpo";
     </script>
 </body>
 </html>
